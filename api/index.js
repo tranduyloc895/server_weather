@@ -20,7 +20,7 @@ const express = require('express');
      return res.status(405).json({ error: 'Method not allowed' });
    }
  
-   const { type, value, threshold, isHigh } = req.body;
+   const { type, value, threshold, isHigh, email } = req.body;
  
    const subject = `Cảnh báo ${type === 'temperature' ? 'nhiệt độ' : 'độ ẩm'}`;
    const message = `
@@ -33,7 +33,7 @@ const express = require('express');
    try {
      await transporter.sendMail({
        from: process.env.EMAIL_USER,
-       to: process.env.ALERT_EMAIL_RECIPIENT,
+       to: email,
        subject,
        html: message
      });
